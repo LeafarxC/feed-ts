@@ -83,7 +83,7 @@ export function Post({ post }: PostProps) {
                     </div>
                 </div>
 
-                <time title= {publishedDateFormatted} dateTime={publishedAt.toISOString()}>
+                <time title= {publishedDateFormatted} dateTime={post.publishedAt.toISOString()}>
                         {publishedDateRelativeToNow}
                 </time>
             </header>
