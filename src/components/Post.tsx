@@ -1,13 +1,30 @@
 import { format, formatDistanceToNow, set } from 'date-fns';
 import pt from 'date-fns/locale/pt';
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react';
 
 import { Avatar } from './Avatar';
-import { Comment } from './comment';
+import { Comment } from './Comment';
 
 import styles from './Post.module.css';
 
-export function Post({ author, publishedAt, content }) {
+interface Author{
+    name: string;
+    role: string;
+    avatarUrl: string;
+}
+
+interface Content {
+    type: string;
+    content: string;
+}
+
+interface PostProps {
+    author: Author;
+    publishedAt: Date;
+    content: Content[];
+}
+
+export function Post({ author, publishedAt, content }: PostProps) {
     const [comments, setComments] = useState([
         'Post, top'
     ])
@@ -24,28 +41,26 @@ export function Post({ author, publishedAt, content }) {
         addSuffix: true,
       })
 
-      function handleCreateNewComment(event) {
+      function handleCreateNewComment(event: FormEvent) {
           event.preventDefault()
-
-          const newCommentText = event.target.comment.value
 
           setComments([...comments, newCommentText]);
           setNewCommentText('');
       }
 
-      function handleNewCommentChange(event) {
+      function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
         event.target.setCustomValidity('')
         setNewCommentText(event.target.value)
       }
 
-      function deleteComment(commentToDelete) {
+      function deleteComment(commentToDelete: string) {
         const commentWithoutDeleteOne = comments.filter(comment => {
           return comment !==  commentToDelete;
         })
           setComments(commentWithoutDeleteOne);
       }
 
-      function handleNewCommentInvalid(event) {
+      function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
         event.target.setCustomValidity('Campo Obrigatorio')
       }
 
@@ -63,7 +78,7 @@ export function Post({ author, publishedAt, content }) {
                     </div>
                 </div>
 
-                <time title= {publishedDateFormatted} datetime={publishedAt.toISOString()}>
+                <time title= {publishedDateFormatted} dateTime={publishedAt.toISOString()}>
                         {publishedDateRelativeToNow}
                 </time>
             </header>
