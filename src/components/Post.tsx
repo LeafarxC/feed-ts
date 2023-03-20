@@ -1,4 +1,4 @@
-import { format, formatDistanceToNow, set } from 'date-fns';
+import { format, formatDistanceToNow } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react';
 
